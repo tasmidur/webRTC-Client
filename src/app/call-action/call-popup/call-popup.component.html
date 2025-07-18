@@ -1,0 +1,49 @@
+<!-- Header -->
+<section style="width: 500px;">
+    <div class="keypad-header p-2">
+        <div class="d-flex d-flex-row">
+            <mat-icon class="{{callDetail.mode}}">{{commonService.getIcon(callDetail.mode) }}</mat-icon>
+            <b class="align-self-center">
+                {{callDetail.mode}}
+            </b>
+        </div>
+        <div class="keypad-actions">
+            <button mat-icon-button (click)="callBtnAction('close')">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Profile Section -->
+    <div class="profile-section">
+        @if(callDetail.guestName){
+            <span class="i-circle">{{callDetail.guestName || callDetail.name |charFormat}}</span>
+        }
+        @else{
+            <img src="https://s3-alpha-sig.figma.com/img/0385/1f20/b825e4a991f999130e81f64b5545fc5a?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=dKo~xAZOwWAu92DA9QvKE-Ohcu1Ni~8fOjUU3AhsQsxNgf8jUj3DFPbT9IgMB5LarUWF1aSMzc4qFHnEW2GxZnKqFQr5eCxJ1qD22aCLXnh8n3ikH4EKHL0bGOAyS8AvRaglvbdMDEoAKX8WCUyVC5dMACTItB3YmNFUgDp0vtBpGwJFN-y0UbOvROAcFTud8nv2Edc0zXQFCPXQOd-wbYdXaWMyCGq3-HrWOYZfc-ZkkrkEHKEGzp6H7x1SnLTybB3HH7nMIg8focde8l~Ly3FZQoYEnkOHq1vf-1-0jHgvdVl2-fQjkCg7r11b7HCpyzePCELzjAIol1WZ8iorLA__" alt="Profile Picture" class="profile-picture" />
+        }
+        <div class="d-flex call-text">
+            <div class="caller-name">{{callDetail.guestName || callDetail.name}}</div>
+            <div class="d-flex vip-icon" *ngIf="callDetail.type=='VIP'">
+                <mat-icon  fontSet="material-symbols-outlined" style="transform: scale(0.6);">{{commonService.getIcon(callDetail.type)}}</mat-icon><span class="align-self-center">VIP</span> 
+            </div>
+        </div>
+        <b>{{callDetail.propertyId}}</b>
+        <b>{{callDetail.propertyName}} - {{callDetail.name}}</b>
+
+        <!-- <p class="call-duration">{{callTime}}</p> -->
+        <button mat-stroked-button class="view-profile-button">View Profile</button>
+    </div>
+    <!-- End Call Button -->
+    <div class="end-call-button-container">
+        <button mat-button class="m-1" style="background-color: #328048;color: white;" (click)="callBtnAction('accept')">
+            <mat-icon>phone_callback</mat-icon>Accept
+        </button>
+        <button mat-button class="m-1" style="background-color: #B72B1A;color: white;" (click)="callBtnAction('reject')">
+            <mat-icon>call_end</mat-icon>Reject
+        </button>
+        <button mat-button class="m-1" style="background-color: #2D67B1;color: white;" (click)="callBtnAction('queue')">
+            <mat-icon>call_log</mat-icon>Queue
+        </button>
+    </div>
+    </section>

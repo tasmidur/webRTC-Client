@@ -1,0 +1,380 @@
+<!-- Header -->
+<!-- <section *ngIf="!callDetail"> -->
+<!-- <div class="keypad-header">
+    <div class="d-flex flex-row">
+        <button mat-icon-button >
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="align-self-center mt-1"><span [class]="callDetail.type" class="d-flex">
+            @if(commonService.getIcon(callDetail.type)){
+                <mat-icon>{{commonService.getIcon(callDetail.type) }}</mat-icon>
+            }
+            @else{
+                <span>Active Call</span>
+            }
+            &nbsp; {{callDetail.phone}}&nbsp;{{callDetail.type}}</span>
+         </div>
+    </div>
+    <div class="keypad-actions">
+        <button mat-icon-button>
+            <mat-icon>open_in_full</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
+</div> -->
+
+<!-- Profile Section -->
+<!-- <div class="profile-section">
+    @if(!callDetail.guestName){
+        <span class="i-circle">{{callDetail.guestName || callDetail.name |charFormat}}</span>
+    } 
+    @else{
+        <img src="https://s3-alpha-sig.figma.com/img/0385/1f20/b825e4a991f999130e81f64b5545fc5a?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=dKo~xAZOwWAu92DA9QvKE-Ohcu1Ni~8fOjUU3AhsQsxNgf8jUj3DFPbT9IgMB5LarUWF1aSMzc4qFHnEW2GxZnKqFQr5eCxJ1qD22aCLXnh8n3ikH4EKHL0bGOAyS8AvRaglvbdMDEoAKX8WCUyVC5dMACTItB3YmNFUgDp0vtBpGwJFN-y0UbOvROAcFTud8nv2Edc0zXQFCPXQOd-wbYdXaWMyCGq3-HrWOYZfc-ZkkrkEHKEGzp6H7x1SnLTybB3HH7nMIg8focde8l~Ly3FZQoYEnkOHq1vf-1-0jHgvdVl2-fQjkCg7r11b7HCpyzePCELzjAIol1WZ8iorLA__" alt="Profile Picture" class="profile-picture" />
+    }
+    <div class="d-flex call-text">
+        <div class="caller-name">{{callDetail.guestName || callDetail.name}}</div>
+        <div class="d-flex vip-icon" *ngIf="callDetail.type=='VIP'">
+            <mat-icon  fontSet="material-symbols-outlined" style="transform: scale(0.6);">{{commonService.getIcon(callDetail.type)}}</mat-icon><span class="align-self-center">VIP</span> 
+        </div>
+    </div>
+    <div>{{callDetail.propertyId}}</div>
+    <p class="call-duration">{{callTime}}</p>
+    <button mat-stroked-button class="view-profile-button">View Profile</button>
+</div> -->
+
+<!-- Call Options -->
+<!-- <div class="call-options" >
+    <div class="option">
+    <button mat-icon-button class="option-button">
+        <mat-icon>mic_off</mat-icon>
+    </button>
+    <span>Mute</span>
+    </div>
+    <div class="option">
+    <button mat-icon-button class="option-button">
+        <mat-icon>pause</mat-icon>
+    </button>
+    <span>Hold</span>
+    </div>
+    <div class="option">
+    <button mat-icon-button class="option-button">
+        <mat-icon>volume_up</mat-icon>
+    </button>
+    <span>Speaker</span>
+    </div>
+    <div class="option">
+    <button mat-icon-button class="option-button">
+        <mat-icon>person_add</mat-icon>
+    </button>
+    <span>Add</span>
+    </div>
+    <div class="option">
+    <button mat-icon-button class="option-button">
+        <mat-icon>phone_forwarded</mat-icon>
+    </button>
+    <span>Transfer</span>
+    </div>
+    <div class="option">
+    <button mat-icon-button class="option-button">
+        <mat-icon>chat_bubble_outline</mat-icon>
+    </button>
+    <span>Messages</span>
+    </div>
+</div> -->
+
+<!-- End Call Button -->
+<!-- <div class="end-call-button-container">
+    
+    <button mat-button class="call-button" (click)="endCall()">
+        <mat-icon>call_end</mat-icon>
+    </button>
+</div> -->
+<!-- </section> -->
+
+<audio #callAudio autoplay></audio>
+
+<section class="d-flex d-flex-row container-fluid" *ngIf="callDetail">
+  <div 
+    class="d-flex flex-column"
+    [ngClass]="{
+      'col-12': toggleQuickCall,
+      'col-7': !toggleQuickCall,
+      'active-call-border': !toggleQuickCall
+    }"
+  >
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-row">
+        <button mat-icon-button>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="align-self-center mt-1">
+          <span [class]="callDetail.type" class="d-flex">
+            @if(commonService.getIcon(callDetail.type)){
+            <mat-icon>{{ commonService.getIcon(callDetail.type) }}</mat-icon>
+            } @else{
+            <span>Active Incoming Call</span>
+            } &nbsp; {{ callDetail.phone }}&nbsp;{{ callDetail.type }}</span
+          >
+        </div>
+      </div>
+      <div class="keypad-actions">
+        <button mat-icon-button>
+          <mat-icon>open_in_full</mat-icon>
+        </button>
+        <button mat-icon-button (click)="toggleQuickCallAction()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </div>
+    <!-- Profile Section -->
+    <div class="d-flex flex-column">
+      <div class="text-center">
+        @if(callDetail.guestName){
+        <span class="i-circle">{{
+          callDetail.guestName || callDetail.name | charFormat
+        }}</span>
+        } @else{
+        <img
+          src="https://s3-alpha-sig.figma.com/img/0385/1f20/b825e4a991f999130e81f64b5545fc5a?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=dKo~xAZOwWAu92DA9QvKE-Ohcu1Ni~8fOjUU3AhsQsxNgf8jUj3DFPbT9IgMB5LarUWF1aSMzc4qFHnEW2GxZnKqFQr5eCxJ1qD22aCLXnh8n3ikH4EKHL0bGOAyS8AvRaglvbdMDEoAKX8WCUyVC5dMACTItB3YmNFUgDp0vtBpGwJFN-y0UbOvROAcFTud8nv2Edc0zXQFCPXQOd-wbYdXaWMyCGq3-HrWOYZfc-ZkkrkEHKEGzp6H7x1SnLTybB3HH7nMIg8focde8l~Ly3FZQoYEnkOHq1vf-1-0jHgvdVl2-fQjkCg7r11b7HCpyzePCELzjAIol1WZ8iorLA__"
+          alt="Profile Picture"
+          class="profile-picture"
+        />
+        }
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="caller-name">
+          {{ callDetail.guestName || callDetail.name }}
+        </div>
+        <div class="d-flex vip-icon" *ngIf="callDetail.type == 'VIP'">
+          <mat-icon
+            fontSet="material-symbols-outlined"
+            style="transform: scale(0.6)"
+            >{{ commonService.getIcon(callDetail.type) }}</mat-icon
+          ><span class="align-self-center">VIP</span>
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="text-center fw-bold">{{ callDetail.propertyId }}</div>
+        <div class="text-center">
+          {{ callState !== "connected" ? callState : callTime }}
+        </div>
+      </div>
+    </div>
+    <!-- Call Options -->
+    <div class="call-options">
+      <div class="option">
+        <button mat-icon-button class="option-button">
+          <mat-icon>mic_off</mat-icon>
+        </button>
+        <span>Mute</span>
+      </div>
+      <div class="option">
+        <button mat-icon-button class="option-button">
+          <mat-icon>pause</mat-icon>
+        </button>
+        <span>Hold</span>
+      </div>
+      <div class="option">
+        <button mat-icon-button class="option-button">
+          <mat-icon>volume_up</mat-icon>
+        </button>
+        <span>Speaker</span>
+      </div>
+      <div class="option">
+        <button mat-icon-button class="option-button">
+          <mat-icon>person_add</mat-icon>
+        </button>
+        <span>Add</span>
+      </div>
+      <div class="option">
+        <button mat-icon-button class="option-button" (click)="openTransferCall(callDetail)">
+          <mat-icon>phone_forwarded</mat-icon>
+        </button>
+        <span>Transfer</span>
+      </div>
+      <div class="option">
+        <button mat-icon-button class="option-button">
+          <mat-icon>chat_bubble_outline</mat-icon>
+        </button>
+        <span>Messages</span>
+      </div>
+    </div>
+    <!-- End Call Button -->
+    <div class="end-call-button-container">
+      <button mat-button class="call-button" (click)="endCall()">
+        <mat-icon>call_end</mat-icon>
+      </button>
+    </div>
+    <!-- Guest Information -->
+    <div class="d-flex flex-column">
+      <div class="d-flex justify-content-between">
+        <p class="fw-bold">Room #</p>
+        <p class="fw-bold me-2 p-1 room-info">Perry Lane Hotel - Room 1003</p>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p class="fw-bold">Room Type</p>
+        <p class="me-2">Suite</p>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p class="fw-bold">Room Status</p>
+        <p class="rounded-pill bg-info text-white p-2 me-2">Occupied</p>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p class="fw-bold">Check In Date</p>
+        <p class="me-2">2024-10-24 2:00 PM</p>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p class="fw-bold">Check Out Date</p>
+        <p class="me-2">2024-10-26 12:10 PM</p>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p class="fw-bold">Voice Mail</p>
+        <p class="me-2">On(2)</p>
+      </div>
+      <!-- <div class="d-flex justify-content-between">
+                <p class="fw-bold">Wake Up Call</p>
+                <p class="rounded-pill text-white p-2 me-2 d-flex" style="background-color: #2D67B1;"><mat-icon>alarm_add</mat-icon><span class="align-self-center">Schedule</span></p>
+            </div> -->
+      <div class="d-flex justify-content-between">
+        <p class="fw-bold">Next Wake Up Call</p>
+        <p class="me-2">2024-10-25 12:10 PM</p>
+      </div>
+      <table class="table">
+        <thead>
+          <tr style="background-color: #f1f1f1">
+            <th scope="col">Service Request</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Extra Pillows<br />11:00 PM</td>
+            <td><span style="color: #ec9312">Pending</span></td>
+            <td>
+              <mat-icon>chat_bubble</mat-icon><mat-icon>visibility</mat-icon>
+            </td>
+          </tr>
+          <tr>
+            <td>Extra Towels<br />12:00 PM</td>
+            <td><span style="color: #2d67b1">In Progress</span></td>
+            <td>
+              <mat-icon>chat_bubble</mat-icon><mat-icon>visibility</mat-icon>
+            </td>
+          </tr>
+          <tr>
+            <td>Room Service<br />10:10 PM</td>
+            <td><span style="color: #2d67b1">Completed</span></td>
+            <td>
+              <mat-icon>chat_bubble</mat-icon><mat-icon>visibility</mat-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="d-flex flex-column col-5" *ngIf="!toggleQuickCall">
+    <!-- <div class="p-2">
+      <p class="fw-bold">Quick Actions</p>
+      <div class="d-flex justify-content-between py-1">
+        <div class="d-flex flex-row">
+          <span class="circle text-center" style="background-color: #c3f2d0"
+            ><img src="/images/icons/check-in.png" /></span
+          ><span class="fw-bold align-self-center">Check In</span>
+        </div>
+        <div>
+          <img src="/images/icons/link-square.png" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-between py-1">
+        <div class="d-flex flex-row">
+          <span class="circle text-center" style="background-color: #ffcebf"
+            ><img src="/images/icons/check-out.png" /></span
+          ><span class="fw-bold align-self-center">Check Out</span>
+        </div>
+        <div>
+          <img src="/images/icons/link-square.png" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-between py-1">
+        <div class="d-flex flex-row">
+          <span class="circle text-center" style="background-color: #fbe5c5"
+            ><img src="/images/icons/room-move.png" /></span
+          ><span class="fw-bold align-self-center">Roome Move</span>
+        </div>
+        <div>
+          <img src="/images/icons/link-square.png" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-between py-1">
+        <div class="d-flex flex-row">
+          <span class="circle text-center" style="background-color: #e1d2ff"
+            ><img src="/images/icons/room-clean.png" /></span
+          ><span class="fw-bold align-self-center">Room Clean</span>
+        </div>
+        <div>
+          <img src="/images/icons/link-square.png" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-between py-1">
+        <div class="d-flex flex-row">
+          <span class="circle text-center" style="background-color: #e5f3ff"
+            ><img src="/images/icons/maintenance.png" /></span
+          ><span class="fw-bold align-self-center">Maintenance</span>
+        </div>
+        <div>
+          <img src="/images/icons/link-square.png" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-between py-1">
+        <div class="d-flex flex-row">
+          <span class="circle text-center" style="background-color: #f9ffef"
+            ><img src="/images/icons/wake-up-call.png" /></span
+          ><span class="fw-bold align-self-center">Wake Up Call</span>
+        </div>
+        <div>
+          <img src="/images/icons/link-square.png" />
+        </div>
+      </div>
+    </div>
+    <div class="p-2">
+      <p class="fw-bold">Departments</p>
+      <div class="call-info-list">
+        @for (call of deptCallList; track call.id) {
+        <div class="d-flex justify-content-between my-2">
+          <div class="d-flex justify-content-between">
+            <div class="align-self-center">
+              <span class="dept-circle">{{ call.name | charFormat }}</span>
+            </div>
+            <div class="d-flex flex-column">
+              <div class="call-text">&nbsp;{{ call.name }}</div>
+              <div class="sub-call-text">&nbsp;{{ call.propertyId }}</div>
+            </div>
+          </div>
+          <div>
+            <button mat-icon-button>
+              <mat-icon>chat_bubble_outline</mat-icon>
+            </button>
+            <button mat-icon-button (click)="openAddCallTo(call);">
+              <mat-icon>phone_outline</mat-icon>
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="floating-buttons d-md-block d-lg-block d-xl-block d-xxl-block">
+      <button
+        mat-icon-button
+        class="floating-bottom"
+        (click)="openConferenceCall()"
+      >
+        <mat-icon>add_task</mat-icon>
+      </button>
+    </div>
+  </div> -->
+  <app-quick-action></app-quick-action>
+  </div>
+</section>

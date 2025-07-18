@@ -1,0 +1,187 @@
+ .call-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  
+  .profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+  
+  .caller-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .call-duration {
+    font-size: 14px;
+    color: gray;
+    margin: 4px 0;
+  }
+  
+  .view-profile-button {
+    margin-top: 8px;
+  }
+  
+  .call-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+  
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .option-button {
+    background-color: #e8f0fe;
+    color: #4285f4;
+  }
+  
+  .option-button:hover {
+    background-color: #d0e6fd;
+  }
+  
+  .end-call-button-container {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+  
+  .end-call-button {
+    background-color: #e53935;
+    color: white;
+  }
+  
+  .end-call-button:hover {
+    background-color: #d32f2f;
+  }
+  .keypad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .keypad-actions button {
+    margin-left: 8px;
+  }
+  .keypad-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 300px; */
+  }
+  .call-button {
+    background-color: #B72B1A;
+    color: white;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+  }
+  .call-button mat-icon {
+    font-size: 25px;
+    top: 12px;
+    left: 6px;
+    width: 50px;
+    height: 50px;
+  }
+  .Emergency{
+    color:#EC9312;
+  }
+  .i-circle {
+    display: inline-block;
+    background-color: #2D67B1;
+    color: #fff;
+    border-radius: 50%;
+    /* font-size: 12px; */
+    line-height: 80px;
+    /* set to same size as width, height */
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 1.5em;
+}
+.vip-icon{
+  color: white;
+  background-color: #EC9312;
+  padding: 2px;
+  border-radius: 0.3em;
+}
+
+/* New Design mobile friendly */
+.room-info{
+  background-color: #E4F0FE;
+  color: #4F81BF;
+  border-radius: 4px;
+}
+
+.circle {
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dept-circle{
+  display: inline-block;
+  background-color: #2D67B1;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+}
+.active-call-border{
+  border-right: 2px solid #f1f1f1;
+}
+.floating-buttons{
+  height: 0;
+}
+.floating-bottom{
+  background-color: #2D67B1;
+  color: white;
+  position: fixed;
+  left: 46%;
+  bottom: 4%;
+}
+.call-info-list{
+  /* height: 300px; */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+@media screen and (max-width: 750px) {
+    .floating-bottom{
+      background-color: #2D67B1;
+      color: white;
+      position: fixed;
+      right: 10%;
+      bottom: 5%;
+      left: 85%;
+      margin-left: 0;
+      margin-top: 0;
+  }
+}

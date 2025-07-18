@@ -1,0 +1,87 @@
+<div class="dial-pad">
+    <div class="d-none d-md-block d-lg-block d-xl-block d-xxl-block">
+      <div class="d-flex justify-content-between ">
+        <button mat-icon-button  mat-dialog-close (click)="onBackKeyPress()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="keypad-title">Keypad</span>
+        <div class="keypad-actions">
+          <button mat-icon-button>
+            <mat-icon>open_in_full</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="search-bar">
+      <input type="text" [(ngModel)]="phoneNumber" placeholder="Enter name or number" />
+      <button class="dial-cross-btn" mat-icon-button mat-icon-button (click)="onClearPressed()">
+        <mat-icon>cancel</mat-icon>
+     </button>
+    </div>
+    <div class="keypad-buttons">
+      <div class="key-row" *ngFor="let row of keypad">
+        <button  class="key" *ngFor="let key of row" (click)="onKeyPadPress(key.value)">
+          <div class="key-value" >{{ key.value }}</div>
+          <div class="key-label">{{ key.label }}</div>
+        </button>
+      </div>
+    </div>
+    <!-- <div class="d-flex justify-content-around my-2">
+      <div>
+        <button mat-icon-button class="call-button" style="margin-left: 40%;" (click)="openActiveCall()">
+            <mat-icon>call</mat-icon>
+        </button>
+      </div>
+      <div class="align-self-center">
+        <button mat-icon-button style="margin-left: 50%;" mat-icon-button (click)="onClearPressed()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </div> -->
+    <div class="call-area-button">
+      <button mat-icon-button class="call-button" (click)="openActiveCall()">
+          <mat-icon>call</mat-icon>
+      </button>
+  </div>
+</div>
+  
+<!-- <section class="d-flex flex-column">
+  <div class="d-flex justify-content-between">
+    <button mat-icon-button  mat-dialog-close (click)="onBackKeyPress()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="keypad-title">Keypad</span>
+    <div class="keypad-actions">
+      <button mat-icon-button>
+        <mat-icon>open_in_full</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="d-flex d-flex-row">
+    <input type="text" [(ngModel)]="phoneNumber" placeholder="Enter name or number" />
+    <div class="align-self-center">
+      <button mat-icon-button style="margin-left: 50%;" mat-icon-button (click)="onClearPressed()">
+          <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex" *ngFor="let row of keypad">
+      <button  class="key" *ngFor="let key of row" (click)="onKeyPadPress(key.value)">
+        <div class="key-value" >{{ key.value }}</div>
+        <div class="key-label">{{ key.label }}</div>
+      </button>
+    </div>
+  </div>
+  <div class="align-items-center">
+      <button mat-icon-button class="call-button" style="margin-left: 40%;" (click)="openActiveCall()">
+          <mat-icon>call</mat-icon>
+      </button>
+  </div>
+</section> -->

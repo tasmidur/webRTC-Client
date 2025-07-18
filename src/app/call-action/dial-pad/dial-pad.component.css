@@ -1,0 +1,155 @@
+/* .keypad-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  } */
+  
+  .keypad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .keypad-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .keypad-actions button {
+    margin-left: 8px;
+  }
+  
+  .search-bar {
+    width: 100%;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  .search-bar input {
+    width: 50%;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  .keypad-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .key-row {
+    display: flex;
+    justify-content: center;
+    gap: 15%;
+  }
+  
+  .key {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #F6F6F9;
+    width: 96px;
+    height: 56px;
+    border-radius: 30px;
+    text-transform: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4A4A6A;
+    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
+    border: none;
+    padding: 9px 14px 9px 14px;
+    font-weight: 600;
+  }
+  
+  .key-value {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .key-label {
+    font-size: 12px;
+    color: #757575;
+  }
+  
+  .keypad-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100%;
+    margin-top: 16px;
+  }
+  
+  .call-button {
+    background-color: #2D67B1;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  /* .call-button mat-icon {
+    font-size: 25px;
+    top: 12px;
+    left: 6px;
+    width: 50px;
+    height: 50px;
+  } */
+
+
+  /* .call-box{
+    width: 440px;
+    min-height: 513px;
+    max-height: 513px;
+  } */
+  .dial-pad{
+    background-color: white;
+  }
+  .dial-cross-btn{
+    position: absolute;
+    margin-top: -4px;
+  }
+  .call-area-button{
+    text-align: center;
+    padding: 1em;
+  }
+  @media screen and (max-width: 750px) {
+    .call-info-list{
+        min-width: 300px;
+        min-height: 65vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .floating-bottom{
+        background-color: #2D67B1;
+        color: white;
+        position: fixed;
+        right: 10%;
+        bottom: 5%;
+        left: 85%;
+        margin-left: 0;
+        margin-top: 0;
+    }
+  }
+  @media screen and (min-width: 360px) and (max-width:450px){
+    .search-bar{
+      margin-top: 1em;
+    }
+    .search-bar input {
+      width: 80%;
+    }
+    .dial-cross-btn{
+      position: absolute;
+      margin-top: -4px;
+    }
+}

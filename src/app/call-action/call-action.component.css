@@ -1,0 +1,84 @@
+.call-area{
+    background-color: white;
+    border-radius: 0.6em;
+}
+.route-active{
+ color: #0054A6;
+ font-weight: 600;
+}
+::ng-deep.mat-divider{
+    border-top-color: #0054A6;
+    border-top-width: 3px;
+}
+.btn {
+    position: relative;
+  }
+.floating-buttons{
+    height: 0;
+    text-align: right;
+}
+.floating-bottom{
+    position: absolute;
+}
+/* call popup */
+.call-popup-overlay {
+    position: fixed;
+    max-width: 30em;
+    min-height: 10em;
+    right: 0.5em;
+    bottom: 0.5em;
+    z-index: 2;
+    background-color: #fff;
+    border: 1px solid #D7E3FF;
+    border-radius: 0.6em;
+  }
+.i-circle {
+    display: inline-block;
+    background-color: #2D67B1;
+    color: #fff;
+    border-radius: 50%;
+    /* font-size: 12px; */
+    line-height: 32px;
+    /* set to same size as width, height */
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    font-size: 0.8em;
+}
+.VIP{
+    color: #EC9312;
+}
+.call-btn{
+    background-color: #328048;
+    color: white;
+}
+.call-end-btn{
+    background-color: #B72B1A;
+    color: white;
+}
+.call-pop:hover{
+    background-color: #e8f4fd;
+}
+.call-popup-modal{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+.popup-body{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+  }
+  .call-section{
+    height: 85vh;
+  }

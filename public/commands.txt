@@ -1,0 +1,2 @@
+ng generate module [module-name] --routing
+ng g component FolderName/newComponent

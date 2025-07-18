@@ -1,0 +1,38 @@
+<div class="login-body">
+  <div class="login-container">
+    <h5 class="login-title">
+      {{ isSessionExpired ? "" : "Welcome to FrontDesk" }}
+    </h5>
+    <p class="session-welcome-message" *ngIf="!isSessionExpired">
+      Username: {{ username }}
+    </p>
+    <p class="session-welcome-message" *ngIf="!isSessionExpired">
+      Please login with your password
+    </p>
+    <p class="session-message" *ngIf="isSessionExpired">
+      {{ message }}
+    </p>
+    <form class="login-form" *ngIf="!isSessionExpired" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="Enter password"
+          [(ngModel)]="password"
+          name="password"
+          class="password-input"
+          required
+        />
+        <p *ngIf="formSubmitionError" class="error-message">
+          {{ formSubmitionError }}
+        </p>
+      </div>
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="!password || isFormSubmitting"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+</div>

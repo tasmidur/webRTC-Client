@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between">
+        <div></div>
+        <div class="d-flex align-self-center">
+            <span class="call-menu d-xs-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none">
+                <a mat-menu-item  [class.route-active]="activeCall == 'InQueue'" (click)="getActiveCall('InQueue')">In Queue</a>
+                <mat-divider *ngIf="activeCall == 'InQueue'" [class.route-active]="activeCall == 'InQueue'"></mat-divider>
+            </span>
+            <span class="call-menu">
+                <a mat-menu-item  [class.route-active]="activeCall == 'RecentCall'" (click)="getActiveCall('RecentCall')">Recent Calls</a>
+                <mat-divider *ngIf="activeCall == 'RecentCall'" [class.route-active]="activeCall == 'RecentCall'"></mat-divider>
+            </span>
+            <span class="call-menu">
+                <a mat-menu-item  [class.route-active]="activeCall == 'SpeedDial'" (click)="getActiveCall('SpeedDial')">Speed Dial</a>
+                <mat-divider *ngIf="activeCall == 'SpeedDial'" [class.route-active]="activeCall == 'SpeedDial'"></mat-divider>
+            </span>
+            <span class="call-menu">
+                <a mat-menu-item  [class.route-active]="activeCall == 'RoomCall'" (click)="getActiveCall('RoomCall')">Rooms</a>
+                <mat-divider *ngIf="activeCall == 'RoomCall'" [class.route-active]="activeCall == 'RoomCall'"></mat-divider>
+            </span>
+        </div>
+        <div class="align-self-center">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <a mat-menu-item [routerLink]="['/dashboard/check-in']">Check-In</a>
+                <a mat-menu-item [routerLink]="['/']">Check-Out</a>
+            </mat-menu>
+        </div>
+</div>
+<app-in-queue *ngIf="activeCall == 'InQueue'" ></app-in-queue> 
+<app-recent-call *ngIf="activeCall == 'RecentCall'" ></app-recent-call> 
+<app-contact *ngIf="activeCall == 'SpeedDial'" ></app-contact> 
+<app-room-call *ngIf="activeCall == 'RoomCall'" ></app-room-call>

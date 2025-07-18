@@ -1,0 +1,18 @@
+@media screen and (max-width: 750px) {
+    .call-info-list{
+        min-width: 300px;
+        height: 65vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .floating-bottom{
+        background-color: #2D67B1;
+        color: white;
+        position: fixed;
+        right: 10%;
+        bottom: 5%;
+        left: 85%;
+        margin-left: 0;
+        margin-top: 0;
+    }
+  }

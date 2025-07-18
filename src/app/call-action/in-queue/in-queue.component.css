@@ -1,0 +1,56 @@
+.i-circle {
+    display: inline-block;
+    background-color: #2D67B1;
+    color: #fff;
+    border-radius: 50%;
+    /* font-size: 12px; */
+    line-height: 32px;
+    /* set to same size as width, height */
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    font-size: 0.8em;
+}
+.VIP{
+    color: #EC9312;
+}
+.call-btn{
+    background-color: #328048;
+    color: white;
+}
+.wait-time{
+ text-align: center;
+ border-radius: 4px;
+}
+.floating-buttons{
+    height: 0;
+}
+.floating-bottom{
+    background-color: #2D67B1;
+    color: white;
+    position: fixed;
+    right: 2%;
+    bottom: 4%;
+}
+.call-info-list{
+    /* height: 300px; */
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  @media screen and (max-width: 750px) {
+    .call-info-list{
+        min-width: 300px;
+        /* height: 65vh; */
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .floating-bottom{
+        background-color: #2D67B1;
+        color: white;
+        position: fixed;
+        right: 10%;
+        bottom: 5%;
+        margin-left: 0;
+        margin-top: 0;
+    }
+  }

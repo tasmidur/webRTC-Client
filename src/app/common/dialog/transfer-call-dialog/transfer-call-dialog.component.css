@@ -1,0 +1,34 @@
+.i-circle {
+    display: inline-block;
+    background-color: #2D67B1;
+    color: #fff;
+    border-radius: 50%;
+    /* font-size: 12px; */
+    line-height: 32px;
+    /* set to same size as width, height */
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    font-size: 0.8em;
+}
+.call-info-list{
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  @media screen and (max-width: 750px) {
+    .call-info-list{
+        min-width: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+  }
+::ng-deep .mat-mdc-dialog-surface{
+    border-radius: 4px !important;
+}
+.dashboard-menu-option {
+    background-color: #2D67B1;
+    border-radius: 2em;
+    color: white !important;
+    min-width: 10em;
+}

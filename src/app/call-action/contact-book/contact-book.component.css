@@ -1,0 +1,34 @@
+.route-active{
+    color: #0054A6;
+    font-weight: 600;
+}
+.call-menu{
+    padding: 0.50em;
+}
+@media screen and (min-width: 360px) and (max-width:450px){
+    .call-menu{
+        padding: 0em;
+    }  
+}
+.floating-buttons{
+    height: 0;
+}
+.floating-bottom{
+    background-color: #2D67B1;
+    color: white;
+    position: fixed;
+    left: 46%;
+    bottom: 4%;
+}
+@media screen and (max-width: 750px) {
+      .floating-bottom{
+        background-color: #2D67B1;
+        color: white;
+        position: fixed;
+        right: 10%;
+        bottom: 5%;
+        left: 85%;
+        margin-left: 0;
+        margin-top: 0;
+    }
+  }

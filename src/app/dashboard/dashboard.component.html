@@ -1,0 +1,72 @@
+<section class="section-header d-flex px-2">
+  <div class="d-flex mb-1 col-md-4 col-lg-4 col-sm-4">
+    <!-- <div class="d-xs-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="text-white">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <a mat-menu-item *ngFor="let menu of menuList;"
+                (click)="onMenu(menu)" [class]="menu.IsSelected ? 'menu-selected':''"
+                [routerLink]="[menu.RouteLink]">
+                {{menu.Name}}
+                </a>
+            </mat-menu>
+        </div> -->
+    <div class="px-2 mt-3">
+      <img class="logo-jazzware" src="/images/logo.png" />
+      <div class="logo-text-name">AGENT FRONT DESK</div>
+    </div>
+    <!-- <div class="align-self-center display-table d-none d-md-block d-lg-block">
+            <div class="menu-header-button ps-2">
+                <a mat-button class="dashboard-menu-option" *ngFor="let menu of menuList;"
+                    (click)="onMenu(menu)" [class]="menu.IsSelected ? 'menu-selected':''"
+                    [routerLink]="[menu.RouteLink]">
+                    {{menu.Name}}
+                </a>
+            </div>
+        </div> -->
+  </div>
+  <div
+    class="col-xs-8 col-sm-8 col-md-8 col-lg-8 align-self-center d-flex justify-content-end"
+  >
+    <div class="p-2">
+      <img
+        src="{{ info.propertyLogo }}"
+        class="rounded-circle logo-property"
+        alt="Cinque Terre"
+      />
+    </div>
+    <mat-divider [vertical]="true" style="width: 1px"></mat-divider>
+    <div class="ps-2 align-self-center property-info">
+      <div class="hotel-text-name">
+        {{ info.propertyName }}
+        <span class="login-extension">9001</span>
+      </div>
+      <span class="login-datetime">{{ info.loginDateTime }}</span>
+    </div>
+    <!-- <div class="align-self-center header-notifications">
+            <mat-icon matBadge="15" style="transform: scale(1.2);">notifications</mat-icon>
+        </div> -->
+    <div class="d-flex justify-content-center align-items-center logo-user">
+      <button mat-button [matMenuTriggerFor]="menuprofile">
+        <img
+          src="{{ info.userImage }}"
+          class="rounded-circle"
+          alt="Cinque Terre"
+          width="32"
+          height="32"
+        />
+      </button>
+      <mat-menu #menuprofile="matMenu">
+        <button mat-menu-item>
+          {{ user.FirstName || "" }} {{ user.LastName || "" }}
+        </button>
+        <button mat-menu-item>Account</button>
+        <button mat-menu-item (click)="Logout()">Logout</button>
+      </mat-menu>
+    </div>
+  </div>
+</section>
+<section style="background-color: #eaecf0">
+  <router-outlet />
+</section>

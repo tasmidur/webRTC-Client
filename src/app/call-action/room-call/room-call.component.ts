@@ -75,10 +75,13 @@ export class RoomCallComponent {
               phone: _item?.ExtensionNumber,
               occupancy: _item?.Inhouse,
               inHouseGuest: _item?.occupancy == 'Inhouse',
-            })).sort(
-              (a: any, b: any) =>
-                (b.inHouseGuest ? 1 : 0) - (a.inHouseGuest ? 1 : 0)
-            );
+            })).sort((a: any, b: any) => {
+              // Primary sort: inHouseGuest (true first)
+              let inHouseComparison =
+                (b.inHouseGuest ? 1 : 0) - (a.inHouseGuest ? 1 : 0);
+              // Secondary sort: phone (ascending) if inHouseGuest is the same
+              return inHouseComparison || a.phone.localeCompare(b.phone);
+            });
             this.originalRoomCallList = [...(this.roomCallList as any)]; // Store a copy of the original list
           }
         });

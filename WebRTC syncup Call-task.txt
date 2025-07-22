@@ -1,0 +1,36 @@
+Extra: When change property in jazz customer portal, the SIP Client windows will be closed with alerting.
+
+
+1) Sort the guest room list in a order with the guestRoomStatus is inhouse/not and room number.
+2) Show and hide the `Call` and `Message` Button accoding the the guestRoomStatus is inhouse/not
+3) Scroll Base pagingation.
+4) VIP Status
+5) Add search Fitler in room list.
+
+
+
+   
+1) [Backend(Progress)]Need to build dll and r file for server. (EST: 4 Hours)
+2) [Backend(Progress)] Create SpeedDial.p file (EST: 4 Hours)
+   i)   Create tt file for return record inclueds fields (PropertyId, ExtensionNumber, Name, Active, CreatedAt, UpdatedAt)
+   ii)  Need To build DLL for Dot Net
+   iii) Need to SpeedDial.r for server
+
+3) [Backend(Dot Net)]Refactoring the  PBX information Modification/Create API. (EST: 4 Hours)
+4) [Backend(Dot Net)] Implementation a REST API service for manage SpeedDial mapping (6 Hours)
+
+5) [Frontend]Add new fields to PBX Information (Modification/Create) (EST: 4 Hours)
+
+    i).   Enable WebRTC Field
+    ii).  Enter WebSocket Url Text Field (Required) when  Enable WebRTC is true
+    iii). Enter Ice Candidate Text Field (Optional) when  Enable WebRTC is true
+    iv)   Enable JazzMS (msSupported=true/false)
+
+
+
+6) [Frontend]Speed Dial Mapping Menu based on WebRTC. (EST: 4 Hours)
+   i)   ExtensionNumber Text Field
+   ii)  Name Text Filed
+
+
+

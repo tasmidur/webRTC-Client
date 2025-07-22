@@ -20,6 +20,7 @@ import { RoomGuestService } from '../../services/room-guest.service';
 export class RoomCallComponent {
   globalSearchValue!: string;
   roomCallList?: any[];
+  originalRoomCallList?: any[];
   isOpenDialPad: boolean = false;
   guestUserPayload: any = {
     sessionId: '',
@@ -68,21 +69,48 @@ export class RoomCallComponent {
               roomName: _item?.RoomNumber,
               guestName:
                 `${_item?.GuestFirstName} ${_item?.GuestLastName}`.trim(),
-              type: _item?.GuestTypes,
+              type: _item?.VIPCode,
               propertyId: this.guestUserPayload.propertyId,
               propertyName: propertyName,
               phone: _item?.ExtensionNumber,
-            }));
+              occupancy: _item?.Inhouse,
+              inHouseGuest: _item?.occupancy == 'Inhouse',
+            })).sort(
+              (a: any, b: any) =>
+                (b.inHouseGuest ? 1 : 0) - (a.inHouseGuest ? 1 : 0)
+            );
+            this.originalRoomCallList = [...(this.roomCallList as any)]; // Store a copy of the original list
           }
         });
     }
+  }
+
+  public filterContact() {
+    if (!this.globalSearchValue) {
+      console.log('globalSearchValue-empty', this.globalSearchValue);
+      this.roomCallList = this.originalRoomCallList
+        ? [...this.originalRoomCallList]
+        : [];
+    } else {
+      const searchTerm = this.globalSearchValue.toLowerCase();
+      console.log('globalSearchValue', this.globalSearchValue);
+      this.roomCallList =
+        this.originalRoomCallList?.filter(
+          (item: any) =>
+            item.guestName.toLowerCase().includes(searchTerm) ||
+            item.roomName.toLowerCase().includes(searchTerm) ||
+            item.phone.toLowerCase().includes(searchTerm)
+        ) || [];
+    }
+    this.roomCallList.sort(
+      (a: any, b: any) => (b.inHouseGuest ? 1 : 0) - (a.inHouseGuest ? 1 : 0)
+    );
   }
 
   public getIcon(name: string): string {
     return IconCollection.getIcon(name);
   }
 
-  filterContact() {}
   openActiveCall(callDetail: any) {
     this.commonService.setCookie(this.commonService.callDetail, callDetail);
     this.route.navigate(['./dashboard/call-action/active-call']);

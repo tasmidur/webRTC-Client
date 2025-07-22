@@ -1,5 +1,11 @@
 import { ChangeDetectorRef, Component, effect } from '@angular/core';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { InQueueComponent } from './in-queue/in-queue.component';
 import { charFormat } from '../common/pipe/charFormat';
@@ -15,9 +21,15 @@ import { IncomingCallAlertDialogComponent } from '../common/dialog/incoming-call
 
 @Component({
   selector: 'app-call-action',
-  imports: [SharedModule, RouterOutlet, InQueueComponent, CallPopupComponent, RouterLink], //charFormat,RouterLinkActive, RouterLink
+  imports: [
+    SharedModule,
+    RouterOutlet,
+    InQueueComponent,
+    CallPopupComponent,
+    RouterLink,
+  ], //charFormat,RouterLinkActive, RouterLink
   templateUrl: './call-action.component.html',
-  styleUrl: './call-action.component.css'
+  styleUrl: './call-action.component.css',
 })
 export class CallActionComponent {
   selectedChatId: number | null = null;
@@ -26,73 +38,78 @@ export class CallActionComponent {
   callpopData: any;
   isCallRoute: boolean = false;
   private ringtone = new Audio('phone-ring.mp3');
-  constructor(private route: Router, public commonService: CommonService, private signalService: SignalService, private cdref: ChangeDetectorRef, private sipService: SipService,
-    public dialog: MatDialog,
+  constructor(
+    private route: Router,
+    public commonService: CommonService,
+    private signalService: SignalService,
+    private cdref: ChangeDetectorRef,
+    private sipService: SipService,
+    public dialog: MatDialog
   ) {
     this.ringtone.loop = true;
 
     this.inQueueCallList = [
       {
         id: 1,
-        name: "Room 601",
-        guestName: "Balogh Imre",
-        type: "VIP",
-        propertyId: "00426",
-        propertyName: "Perry Lane Hotel",
-        phone: "601",
-        timePass: "12 Sec"
+        name: 'Room 601',
+        guestName: 'Balogh Imre',
+        type: 'VIP',
+        propertyId: '00426',
+        propertyName: 'Perry Lane Hotel',
+        phone: '601',
+        timePass: '12 Sec',
       },
       {
         id: 2,
-        name: "Room 708",
-        guestName: "Bogdan Norbert",
-        type: "",
-        propertyId: "00427",
-        propertyName: "Perry Lane Hotel",
-        phone: "708",
-        timePass: "5 Sec"
+        name: 'Room 708',
+        guestName: 'Bogdan Norbert',
+        type: '',
+        propertyId: '00427',
+        propertyName: 'Perry Lane Hotel',
+        phone: '708',
+        timePass: '5 Sec',
       },
       {
         id: 3,
-        name: "The Pool",
-        guestName: "",
-        type: "",
-        propertyId: "00600",
-        propertyName: "Perry Lane Hotel",
-        phone: "105",
-        timePass: "26 Sec"
+        name: 'The Pool',
+        guestName: '',
+        type: '',
+        propertyId: '00600',
+        propertyName: 'Perry Lane Hotel',
+        phone: '105',
+        timePass: '26 Sec',
       },
       {
         id: 4,
-        name: "Security",
-        guestName: "",
-        type: "",
-        propertyId: "00610",
-        propertyName: "Perry Lane Hotel",
-        phone: "999",
-        timePass: "48 Sec"
+        name: 'Security',
+        guestName: '',
+        type: '',
+        propertyId: '00610',
+        propertyName: 'Perry Lane Hotel',
+        phone: '999',
+        timePass: '48 Sec',
       },
       {
         id: 5,
-        name: "Room 211",
-        guestName: "Alex Bell",
-        type: "",
-        propertyId: "00510",
-        propertyName: "Perry Lane Hotel",
-        phone: "211",
-        timePass: "20 Sec"
+        name: 'Room 211',
+        guestName: 'Alex Bell',
+        type: '',
+        propertyId: '00510',
+        propertyName: 'Perry Lane Hotel',
+        phone: '211',
+        timePass: '20 Sec',
       },
       {
         id: 6,
-        name: "Room 210",
-        guestName: "Michael Tan",
-        type: "",
-        propertyId: "00430",
-        propertyName: "Perry Lane Hotel",
-        phone: "210",
-        timePass: "20 Sec"
-      }
-    ]
+        name: 'Room 210',
+        guestName: 'Michael Tan',
+        type: '',
+        propertyId: '00430',
+        propertyName: 'Perry Lane Hotel',
+        phone: '210',
+        timePass: '20 Sec',
+      },
+    ];
     const userEmail = localStorage.getItem('userEmail');
 
     if (userEmail) {
@@ -101,39 +118,39 @@ export class CallActionComponent {
       if (username === '1001') {
         this.callpopData = {
           id: 201,
-          name: "Perry Lane Hotel - Guest",
-          guestName: "John Smith",
-          propertyId: "",
-          propertyName: "",
-          mode: "Incoming",
-          phone: "1003",
-          type: "",
-          timePass: "10 Sec",
+          name: 'Perry Lane Hotel - Guest',
+          guestName: 'John Smith',
+          propertyId: '',
+          propertyName: '',
+          mode: 'Incoming',
+          phone: '1003',
+          type: '',
+          timePass: '10 Sec',
         };
       } else if (username === '1003') {
         this.callpopData = {
           id: 202,
-          name: "Perry Lane Hotel - Facilities",
-          guestName: "Maintenance",
-          propertyId: "",
-          propertyName: "",
-          mode: "Incoming",
-          phone: "1001",
-          type: "",
-          timePass: "10 Sec",
+          name: 'Perry Lane Hotel - Facilities',
+          guestName: 'Maintenance',
+          propertyId: '',
+          propertyName: '',
+          mode: 'Incoming',
+          phone: '1001',
+          type: '',
+          timePass: '10 Sec',
         };
       } else {
         // Default fallback for other users
         this.callpopData = {
           id: 203,
-          name: "Unknown Caller",
-          guestName: "Unknown",
-          propertyId: "",
-          propertyName: "",
-          mode: "Incoming",
-          phone: "0000",
-          type: "",
-          timePass: "00 Sec",
+          name: 'Unknown Caller',
+          guestName: 'Unknown',
+          propertyId: '',
+          propertyName: '',
+          mode: 'Incoming',
+          phone: '0000',
+          type: '',
+          timePass: '00 Sec',
         };
       }
     }
@@ -145,14 +162,13 @@ export class CallActionComponent {
       if (status === 'incoming') {
         this.isOpenCallPopup = false;
         this.playRingtone();
-      } else if (status === "ended") {
+      } else if (status === 'ended') {
         this.isOpenCallPopup = false;
         this.stopRingtone();
       } else {
         this.stopRingtone();
       }
     });
-
   }
   async ngOnInit(): Promise<void> {
     if (this.route.url.includes('active-call')) {
@@ -161,7 +177,7 @@ export class CallActionComponent {
       this.isCallRoute = false;
     }
 
-    const userEmail = localStorage.getItem('userEmail');
+    const userEmail = this.commonService.getUser()?.user?.UserEmail; //localStorage.getItem('userEmail');
 
     if (userEmail) {
       const matchedUser = this.sipService.dummyUsers.find(
@@ -171,11 +187,16 @@ export class CallActionComponent {
       if (matchedUser) {
         try {
           // Check if the client is already registered
-          if (this.sipService.registerer?.state === RegistererState.Registered) {
+          if (
+            this.sipService.registerer?.state === RegistererState.Registered
+          ) {
             console.log('SIP client is already registered.');
           } else {
             console.log('SIP client is not registered. Registering now...');
-            await this.sipService.register(matchedUser.username, matchedUser.password);
+            await this.sipService.register(
+              matchedUser.username,
+              matchedUser.password
+            );
           }
         } catch (error) {
           console.error('Failed to check or register SIP client:', error);
@@ -196,24 +217,25 @@ export class CallActionComponent {
     this.openIncomingCallAlert();
   }
   onMessageSelected(chatId: number) {
-    window.open('http://www.google.com', '_blank', 'toolbar=0,location=0,menubar=0');
+    window.open(
+      'http://www.google.com',
+      '_blank',
+      'toolbar=0,location=0,menubar=0'
+    );
     this.selectedChatId = chatId;
   }
 
   oepnQueueCall(callDetail: any) {
     this.commonService.setCookie(this.commonService.callDetail, callDetail);
-    this.route.navigate(["./dashboard/call-action/active-call"]);
-
-  };
+    this.route.navigate(['./dashboard/call-action/active-call']);
+  }
 
   endCall(callDetail: any) {
     const index = this.inQueueCallList.indexOf(callDetail);
 
-    if (index > -1)
-      this.inQueueCallList.splice(index, 1);
+    if (index > -1) this.inQueueCallList.splice(index, 1);
 
-    if (!this.inQueueCallList.length)
-      this.isOpenCallPopup = false;
+    if (!this.inQueueCallList.length) this.isOpenCallPopup = false;
   }
   private async playRingtone() {
     try {
@@ -250,39 +272,40 @@ export class CallActionComponent {
   callPopAction(action: any) {
     this.isOpenCallPopup = false;
     console.log(action);
-    this.commonService.setCookie(this.commonService.callDetail, this.callpopData);
+    this.commonService.setCookie(
+      this.commonService.callDetail,
+      this.callpopData
+    );
     // this.route.navigate(["./dashboard/call-message/active-call"]);
-    if (action == "accept") {
+    if (action == 'accept') {
       this.stopRingtone();
       this.isOpenCallPopup = false;
-      this.route.navigate(["./dashboard/call-message/active-call"], {
+      this.route.navigate(['./dashboard/call-message/active-call'], {
         queryParams: { timestamp: Date.now() },
-        state: { incomingCallAccepted: true }
+        state: { incomingCallAccepted: true },
       });
-    } else if (action == "reject") {
+    } else if (action == 'reject') {
       this.stopRingtone();
       this.sipService.terminateCall();
       this.isOpenCallPopup = false;
-    } else if (action == "queue") {
+    } else if (action == 'queue') {
       this.stopRingtone();
       this.isOpenCallPopup = false;
     }
   }
-    openIncomingCallAlert(call: any=''){
-  
-      // Dialog to show incoming call alert
-      // const dialogRefAddCallTo = this.dialog.open(IncomingCallAlertDialogComponent, {
-      //   panelClass:"incomingCallAlert",
-      //   data: this.callpopData,
-      // });
-  
-      // dialogRefAddCallTo.afterClosed().subscribe(result => {
-      //   console.log('The dialog was closed');
-      //   if (result !== undefined) {
-      //    console.log(result);
-      //   }
-      // });
-    }
+  openIncomingCallAlert(call: any = '') {
+    // Dialog to show incoming call alert
+    // const dialogRefAddCallTo = this.dialog.open(IncomingCallAlertDialogComponent, {
+    //   panelClass:"incomingCallAlert",
+    //   data: this.callpopData,
+    // });
+    // dialogRefAddCallTo.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    //   if (result !== undefined) {
+    //    console.log(result);
+    //   }
+    // });
+  }
   ngOnDestroy() {
     this.stopRingtone();
   }

@@ -8,12 +8,14 @@
         style="width: 98%"
         pInputText
         type="text"
+        [(ngModel)]="globalSearchValue"
+        (ngModelChange)="filterContact()"
         placeholder="Enter name or number"
       />
     </p-iconfield>
   </div>
   <div style="min-height: 65vh">
-    <div class="call-info-list" [style]="isOpenDialPad ? 'height: 70vh;' : ''">
+    <div class="call-info-list" [style]="'height: 67vh; overflow-y: auto'">
       <ng-container
         *ngIf="roomCallList && roomCallList.length > 0; else loading"
       >
@@ -29,12 +31,12 @@
                 <div class="d-flex call-text">
                   <div>&nbsp;{{ call.guestName }}</div>
 
-                  <div class="d-flex vip-icon" *ngIf="call.type == 'VIP'">
+                  <div class="d-flex vip-icon" *ngIf="call.type">
                     <mat-icon
                       fontSet="material-symbols-outlined"
                       style="transform: scale(0.6)"
-                      >{{ getIcon(call.type) }}</mat-icon
-                    ><span class="align-self-center">VIP</span>
+                      >{{ getIcon("VIP") }}</mat-icon
+                    ><span class="align-self-center">{{ call.type }}</span>
                   </div>
                 </div>
                 <div class="d-flex flex-row">
@@ -45,11 +47,11 @@
                 <div class="sub-call-text">&nbsp;{{ call.propertyId }}</div>
               </div>
             </div>
-            <div>
-              <button mat-icon-button (click)="openChatBox(call)">
+            <div *ngIf="call?.inHouseGuest">
+              <!-- <button mat-icon-button (click)="openChatBox(call)">
                 <mat-icon>chat_bubble_outline</mat-icon>
-              </button>
-              <button mat-icon-button (click)="openActiveCall(call)">
+              </button> -->
+              <button mat-icon-button (click)="openActiveCall(call?.phone)">
                 <mat-icon>phone_outline</mat-icon>
               </button>
             </div>
@@ -58,7 +60,10 @@
       </ng-container>
       <ng-template #loading>
         <div class="data-loader">
-          <mat-spinner diameter="40"></mat-spinner>
+          <mat-spinner diameter="40" *ngIf="!roomCallList"></mat-spinner>
+          <div *ngIf="roomCallList && roomCallList.length === 0">
+            No results found.
+          </div>
         </div>
       </ng-template>
     </div>
@@ -70,7 +75,7 @@
   >
     <button
       mat-icon-button
-      class="floating-bottom"
+      class="floating-bottom m-2"
       (click)="openDialpadByRoute()"
     >
       <mat-icon>dialpad</mat-icon>
@@ -81,7 +86,7 @@
   >
     <button
       mat-icon-button
-      class="floating-bottom"
+      class="floating-bottom m-2"
       (click)="openDialpadByRoute()"
     >
       <mat-icon>dialpad</mat-icon>

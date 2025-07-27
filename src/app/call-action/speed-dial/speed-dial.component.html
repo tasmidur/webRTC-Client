@@ -1,0 +1,82 @@
+<section class="d-flex flex-column">
+  <div class="col-12 my-2">
+    <p-iconfield iconPosition="left" class="ml-auto">
+      <p-inputicon>
+        <mat-icon style="margin-top: -2px">search</mat-icon>
+      </p-inputicon>
+      <input
+        style="width: 98%"
+        pInputText
+        type="text"
+        placeholder="Enter name or number"
+      />
+    </p-iconfield>
+  </div>
+
+  <div style="min-height: 65vh">
+    <div class="call-info-list" [style]="'height: 67vh; overflow-y: auto'">
+      <ng-container
+        *ngIf="speedDialList && speedDialList.length > 0; else loading"
+      >
+        <div *ngFor="let speedDial of speedDialList; let i = index">
+          <div class="d-flex justify-content-between my-2">
+            <div class="d-flex justify-content-between">
+              <div class="align-self-center">
+                <span class="i-circle">{{ speedDial.name | charFormat }}</span>
+              </div>
+              <div class="d-flex flex-column">
+                <div class="call-text">&nbsp;{{ speedDial.name }}</div>
+                <div class="d-flex flex-row sub-call-text">
+                  &nbsp;<span class="sub-call-text"
+                    >{{ speedDial.propertyName }} - {{ speedDial.type }}</span
+                  >
+                </div>
+                <div class="sub-call-text">&nbsp;{{ speedDial.phone }}</div>
+              </div>
+            </div>
+            <div>
+              <button mat-icon-button (click)="openChatBox(speedDial)">
+                <mat-icon>chat_bubble_outline</mat-icon>
+              </button>
+              <button mat-icon-button (click)="openActiveCall(speedDial)">
+                <mat-icon>phone_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #loading>
+        <div class="data-loader">
+          <mat-spinner diameter="40" *ngIf="!speedDialList"></mat-spinner>
+          <div *ngIf="speedDialList && speedDialList.length === 0">
+            No results found.
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <app-dial-pad *ngIf="isOpenDialPad"></app-dial-pad>
+  </div>
+
+  <div
+    class="floating-buttons d-xs-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+  >
+    <button
+      mat-icon-button
+      class="floating-bottom"
+      (click)="openDialpadByRoute()"
+    >
+      <mat-icon>dialpad</mat-icon>
+    </button>
+  </div>
+  <div
+    class="floating-buttons d-none d-md-block d-lg-block d-xl-block d-xxl-block"
+  >
+    <button
+      mat-icon-button
+      class="floating-bottom"
+      (click)="openDialpadByRoute()"
+    >
+      <mat-icon>dialpad</mat-icon>
+    </button>
+  </div>
+</section>

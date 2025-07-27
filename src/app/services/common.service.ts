@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
 import { IconCollection } from '../common/IconCollection';
 import * as CryptoJS from 'crypto-js';
+import { routerList } from '../common/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -137,9 +138,11 @@ export class CommonService {
         text: 'Please login again',
         icon: 'info',
       }).then((result) => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userInfo');
-        location.reload();
+        console.log('result', result);
+
+        this.removePropertyServicesSession();
+        this.removeSessionToken();
+        window.location.href = routerList.default;
       });
     } else {
       console.error(

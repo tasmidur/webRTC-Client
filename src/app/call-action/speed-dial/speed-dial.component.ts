@@ -1,80 +1,60 @@
 import { Component } from '@angular/core';
-import { CommonService } from '../../services/common.service';
-import { Router } from '@angular/router';
 import { IconCollection } from '../../common/IconCollection';
 import { SharedModule } from '../../shared/shared.module';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { charFormat } from '../../common/pipe/charFormat';
+import { Router } from '@angular/router';
+import { CommonService } from '../../services/common.service';
 import { DialPadComponent } from '../dial-pad/dial-pad.component';
 import { ChatBoxDialogComponent } from '../../common/dialog/chat-box-dialog/chat-box-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { RoomGuestService } from '../../services/room-guest.service';
+import { SpeedDialService } from '../../services/speed-dial.service';
 
 @Component({
-  selector: 'app-room-call',
-  imports: [SharedModule, IconField, InputIcon, DialPadComponent],
-  templateUrl: './room-call.component.html',
-  styleUrl: './room-call.component.css',
+  selector: 'app-contact',
+  imports: [SharedModule, IconField, InputIcon, charFormat, DialPadComponent],
+  templateUrl: './speed-dial.component.html',
+  styleUrl: './speed-dial.component.css',
 })
-export class RoomCallComponent {
+export class ContactComponent {
   globalSearchValue!: string;
-  roomCallList?: any[];
-  originalRoomCallList?: any[];
+  speedDialList?: any[];
+  originalSpeedDialList?: any[];
   isOpenDialPad: boolean = false;
-  guestUserPayload: any = {
+  speedDialPayload: any = {
     sessionId: '',
     propertyId: '',
-    requestAttr: {
-      LastKnownVersion: 0,
-      Filters: [],
-      SortElements: [
-        {
-          SortName: 'RoomNumber',
-          SortDesc: '',
-          SortOrder: 'ASC',
-        },
-      ],
-      SortElementList: null,
-      StartFrom: 0,
-      RecordCount: 10000,
-    },
   };
-
   constructor(
     private route: Router,
-    public commonService: CommonService,
+    private commonService: CommonService,
     public dialog: MatDialog,
-    public roomGuestService: RoomGuestService
+    public speedDialService: SpeedDialService
   ) {
-    this.guestUserPayload.propertyId =
+    this.speedDialPayload.propertyId =
       this.commonService.getUser()?.propertyCode;
-    this.guestUserPayload.sessionId =
+    this.speedDialPayload.sessionId =
       this.commonService.getPropertyServicesSession();
   }
 
   ngOnInit(): void {
-    this.getRoomList();
+    this.getSpeedDialList();
   }
 
-  public getRoomList() {
-    if (this.guestUserPayload.sessionId) {
-      this.roomGuestService
-        .getGuestRoomList(this.guestUserPayload)
+  public getSpeedDialList() {
+    if (this.speedDialPayload.sessionId) {
+      this.speedDialService
+        .getSpeedDialList(this.speedDialPayload)
         .subscribe((res) => {
-          if (res && res?.GuestRoomList) {
+          if (res) {
             const propertyName = this.commonService.getUser()?.propertyName;
-            this.roomCallList = res?.GuestRoomList?.map((_item: any) => ({
-              id: _item?.Id,
-              roomName: _item?.RoomNumber,
-              guestName:
-                `${_item?.GuestFirstName} ${_item?.GuestLastName}`.trim(),
-              type: _item?.VIPCode,
-              propertyId: this.guestUserPayload.propertyId,
-              propertyName: propertyName,
+            this.speedDialList = res?.SpeedDialList?.map((_item: any) => ({
               phone: _item?.ExtensionNumber,
-              occupancy: _item?.Inhouse,
-              inHouseGuest: _item?.occupancy == 'Inhouse',
+              name: _item?.Name,
+              type: _item?.Type,
+              propertyId: this.speedDialPayload.propertyId,
+              propertyName: propertyName,
             })).sort((a: any, b: any) => {
               // Primary sort: inHouseGuest (true first)
               let inHouseComparison =
@@ -82,7 +62,7 @@ export class RoomCallComponent {
               // Secondary sort: phone (ascending) if inHouseGuest is the same
               return inHouseComparison || a.phone.localeCompare(b.phone);
             });
-            this.originalRoomCallList = [...(this.roomCallList as any)]; // Store a copy of the original list
+            this.originalSpeedDialList = [...(this.speedDialList as any)]; // Store a copy of the original list
           }
         });
     }
@@ -90,35 +70,36 @@ export class RoomCallComponent {
 
   public filterContact() {
     if (!this.globalSearchValue) {
-      this.roomCallList = this.originalRoomCallList
-        ? [...this.originalRoomCallList]
+      this.speedDialList = this.originalSpeedDialList
+        ? [...this.originalSpeedDialList]
         : [];
     } else {
       const searchTerm = this.globalSearchValue.toLowerCase();
-      this.roomCallList =
-        this.originalRoomCallList?.filter(
+      this.speedDialList =
+        this.originalSpeedDialList?.filter(
           (item: any) =>
-            item.guestName.toLowerCase().includes(searchTerm) ||
-            item.roomName.toLowerCase().includes(searchTerm) ||
             item.phone.toLowerCase().includes(searchTerm) ||
+            item.name.toLowerCase().includes(searchTerm) ||
+            item.type.toLowerCase().includes(searchTerm) ||
             `${item.propertyId}`.toLowerCase().includes(searchTerm) ||
             item.propertyName.toLowerCase().includes(searchTerm)
         ) || [];
     }
-    this.roomCallList.sort(
+    this.speedDialList.sort(
       (a: any, b: any) => (b.inHouseGuest ? 1 : 0) - (a.inHouseGuest ? 1 : 0)
     );
   }
-
   public getIcon(name: string): string {
     return IconCollection.getIcon(name);
   }
 
   openActiveCall(callDetail: any) {
     this.commonService.setCookie(this.commonService.callDetail, callDetail);
+    this.commonService.setCookie(this.commonService.dialPadNumber, '1001');
     this.route.navigate(['./dashboard/call-action/active-call']);
   }
   openDialpad() {
+    // this.route.navigate(["./dashboard/call-message/dial-pad"]);
     this.isOpenDialPad = !this.isOpenDialPad;
   }
   openDialpadByRoute() {

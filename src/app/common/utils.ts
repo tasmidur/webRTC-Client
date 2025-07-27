@@ -1,10 +1,11 @@
 export const apiEndPoint = {
-  validateLogin: `JazzWebSDK/GuestEngagement/GuestEngagementService.svc/jsonp/ValidateLogin`,
+  validateLogin: `GuestEngagement/GuestEngagementService.svc/jsonp/ValidateLogin`,
   logon: `jazzfusion/api/Logon`,
-  propertyList: `jazzfusion/api/PropertyList`,
-  portalUserProfile: `JazzWebSDK/GuestEngagement/GuestEngagementService.svc/jsonp/GetPortalUserProfile`,
-  guestRoomList: `JazzWebSDK/PropertyService/PropertyService.svc/jsonp/GetGuestRoomList`,
-  extendSession: `JazzWebSDK/GuestEngagement/GuestEngagementService.svc/jsonp/ExtendSession`,
+  propertyList: `api/PropertyList`,
+  portalUserProfile: `GuestEngagement/GuestEngagementService.svc/jsonp/GetPortalUserProfile`,
+  guestRoomList: `PropertyService/PropertyService.svc/jsonp/GetGuestRoomList`,
+  speedDialList: `PropertyService/PropertyService.svc/jsonp/GetSpeedDialList`,
+  extendSession: `GuestEngagement/GuestEngagementService.svc/jsonp/ExtendSession`,
 };
 
 export const routerList = {

@@ -1,4 +1,4 @@
 export const environment = {
-     production: true,
-     baseApiUrl: 'https://jazzqa2.jazz-fusion.net/QA2'
+  production: true,
+  baseApiUrl: 'https://local.jazz-fusion.net/12.5.2.JazzWebSDK',
 };

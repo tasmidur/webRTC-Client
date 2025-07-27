@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-import { ContactComponent } from '../contact/contact.component';
+import { ContactComponent } from '../speed-dial/speed-dial.component';
 import { RecentCallComponent } from '../recent-call/recent-call.component';
 import {
   ActivatedRoute,

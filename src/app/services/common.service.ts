@@ -22,8 +22,10 @@ export class CommonService {
   readonly customerPortalUrl: string;
   readonly jazzWebSDKGuestApiURL: string;
   private cryptoAuthSecret: string | null = null;
+  private authPasswordSecret: string | null = null;
   private sessionTimeoutPeriod: number | null = null;
   readonly authSecretKey = 'frontDesk.authToken';
+  readonly authUserSecretKey = 'frontDesk.userSecretKey';
   readonly userInfo = 'frontDesk.userInfo';
   readonly sessionToken = 'frontDesk.sessionToken';
   readonly propertyServicesSession = 'frontDesk.propertyServicesSession';
@@ -35,6 +37,7 @@ export class CommonService {
     this.customerPortalUrl = environment.customerPortalUrl;
     this.jazzWebSDKGuestApiURL = environment.jazzWebSDKGuestApiURL;
     this.cryptoAuthSecret = environment.cryptoAuthSecret;
+    this.authPasswordSecret = environment.authPasswordSecret;
     this.sessionTimeoutPeriod = environment.sessionTimeoutPeriod;
     this.jazzWebSDKRefreshInterval = environment.jazzWebSDKRefreshInterval;
   }
@@ -115,6 +118,51 @@ export class CommonService {
     return this.sessionTimeoutPeriod;
   }
 
+  setPassword(password: string | null): void {
+    if (!password) {
+      return;
+    }
+    // Generate a 16-character random salt
+    const salt = this.generateRandomString(16);
+    // Combine password with salt
+    const saltedPassword = `${salt}${password}`;
+    const bytes = CryptoJS.AES.encrypt(
+      saltedPassword,
+      this.authPasswordSecret || ''
+    );
+    // Store both the encrypted data and the salt length
+    localStorage.setItem(
+      this.authUserSecretKey,
+      `${bytes.toString()}|${salt.length}`
+    );
+  }
+
+  getPassword(): string | null {
+    const storedData = localStorage.getItem(this.authUserSecretKey);
+    if (!storedData) {
+      return null;
+    }
+
+    try {
+      // Split the stored data to get encrypted string and salt length
+      const [encrypted, saltLengthStr] = storedData.split('|');
+      const saltLength = parseInt(saltLengthStr, 10);
+
+      // Decrypt
+      const bytes = CryptoJS.AES.decrypt(
+        encrypted,
+        this.authPasswordSecret || ''
+      );
+      const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+
+      // Remove the salt (first saltLength characters)
+      return decrypted.slice(saltLength);
+    } catch (error) {
+      console.error('Password decryption failed:', error);
+      return null;
+    }
+  }
+
   cryptoJsDecryption(ciphertext: string): any {
     if (!ciphertext) {
       return null;
@@ -169,5 +217,17 @@ export class CommonService {
   }
   public getIcon(name: string): string {
     return IconCollection.getIcon(name);
+  }
+
+  private generateRandomString(length: number): string {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
   }
 }

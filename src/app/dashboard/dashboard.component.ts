@@ -45,15 +45,36 @@ export class DashboardComponent implements OnDestroy {
     console.log('Refreshing session... at ', new Date().toLocaleTimeString());
     const sessionToken = this.commonService.getSessionToken();
     if (sessionToken) {
-      this.authService.refreshSharedSession(sessionToken).subscribe((res) => {
-        if (!res) {
-          this.commonService.removeSessionToken();
-          this.commonService.removePropertyServicesSession();
-          this.commonService.removeLastApiAccessTime();
-          this.commonService.removeUser();
-          this.router.navigate([routerList.default]);
-        }
+      this.doLogin();
+    }
+  }
+
+  doLogin() {
+    const userInfo = this.commonService.getUser();
+    if (userInfo?.user && userInfo?.propertyName && userInfo?.propertyCode) {
+      const payload = {
+        username: userInfo?.user?.UserEmail,
+        password: this.commonService.getPassword(),
+        propertyName: userInfo?.propertyName,
+        propertyCode: userInfo?.propertyCode,
+      };
+      this.authService.login(payload).subscribe({
+        next: (response) => {
+          if (!response) {
+            this.commonService.removeSessionToken();
+            this.commonService.removePropertyServicesSession();
+            this.commonService.removeUser();
+            window.location.href = routerList.default;
+          } else {
+            console.log('Successfully session updated.');
+          }
+        },
       });
+    } else {
+      this.commonService.removeSessionToken();
+      this.commonService.removePropertyServicesSession();
+      this.commonService.removeUser();
+      window.location.href = routerList.default;
     }
   }
 
@@ -125,13 +146,32 @@ export class DashboardComponent implements OnDestroy {
       window.open(`${host}/dashboard/message-action`, 'Message', 'width=640');
     }
   }
-  Logout() {
+  Logout(): void {
+    // Clear session data
     this.commonService.removeSessionToken();
     this.commonService.removePropertyServicesSession();
     this.commonService.removeLastApiAccessTime();
     this.commonService.removeUser();
-    window.close();
-    //this.router.navigate([routerList.default]);
+
+    // Log for debugging
+    console.log('Logout successful');
+
+    // Attempt to close the window
+    try {
+      window.close();
+      // If window.close() doesn't work, navigate to a default route
+      setTimeout(() => {
+        if (!window.closed) {
+          console.warn(
+            'Window could not be closed programmatically. Redirecting to default route.'
+          );
+          this.router.navigate(['']); // Navigate to default route (e.g., login page)
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Error attempting to close window:', error);
+      this.router.navigate(['']); // Fallback to default route
+    }
   }
   ngOnDestroy(): void {
     if (this.refreshIntervalId) {

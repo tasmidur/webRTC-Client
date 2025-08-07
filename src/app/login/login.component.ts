@@ -27,7 +27,7 @@ export class LoginComponent {
   isSessionExpired: boolean = false;
 
   public isFormSubmitting = false;
-  public formSubmitionError = null;
+  public formSubmitionError: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -104,48 +104,20 @@ export class LoginComponent {
       const payload = {
         username: this.username,
         password: this.password,
-        hbpid: '',
-        fromAuth: false,
-        portalCookieA: '',
+        propertyName: this.propertyName,
+        propertyCode: this.propertyCode,
       };
       this.authService.login(payload).subscribe({
         next: (response) => {
-          if (response && response?.IsLoggedIn) {
-            /**
-             * Logon api call for session
-             */
-            const retvalValues = response?.Retval.split(':');
-            const sessionTokenValue = retvalValues[retvalValues.length - 1];
-            this.commonService.setSessionToken(sessionTokenValue || '');
-            const userValues = response?.User.split(',');
-            /**
-             * Set Property session
-             */
-            this.commonService.setPropertyServicesSession(
-              response?.PropertyServicesSession || ''
-            );
-            /**
-             * Set User info
-             */
-            this.commonService.setUser({
-              propertyName: this.propertyName,
-              propertyCode: this.propertyCode,
-              user: {
-                UserEmail: this.username,
-                FirstName:
-                  userValues && userValues?.length > 1 ? userValues[1] : '',
-                LastName:
-                  userValues && userValues?.length > 0 ? userValues[0] : '',
-              },
-            });
-            /**
-             * Redirect to Dashboard
-             */
-            window.location.href = routerList.callAction;
-          } else {
+          this.isFormSubmitting = false;
+          if (!response) {
             this.commonService.removeSessionToken();
             this.commonService.removePropertyServicesSession();
             this.commonService.removeUser();
+            this.formSubmitionError = 'InValid username or password';
+          } else {
+            this.commonService.setPassword(this.password);
+            window.location.href = routerList.callAction;
           }
         },
       });

@@ -24,9 +24,56 @@ export class AuthService {
   /** POST: add a new hero to the database */
   login(model: any): Observable<any> {
     const endPoint = apiEndPoint.validateLogin;
+    const payload = {
+      username: model.username,
+      password: model.password,
+      hbpid: '',
+      fromAuth: false,
+      portalCookieA: '',
+    };
+
     return this.http
-      .post<any>(`${this.commonService.baseUrl}/${endPoint}`, model)
-      .pipe(catchError(this.commonService.handleError));
+      .post<any>(`${this.commonService.baseUrl}/${endPoint}`, payload)
+      .pipe(
+        map((response) => {
+          if (response && response?.IsLoggedIn) {
+            /**
+             * Logon api call for session
+             */
+            const retvalValues = response?.Retval.split(':');
+            const sessionTokenValue = retvalValues[retvalValues.length - 1];
+            this.commonService.setSessionToken(sessionTokenValue || '');
+            const userValues = response?.User.split(',');
+            /**
+             * Set Property session
+             */
+            this.commonService.setPropertyServicesSession(
+              response?.PropertyServicesSession || ''
+            );
+            /**
+             * Set User info
+             */
+            this.commonService.setUser({
+              propertyName: model.propertyName,
+              propertyCode: model.propertyCode,
+              user: {
+                UserEmail: model.username,
+                FirstName:
+                  userValues && userValues?.length > 1 ? userValues[1] : '',
+                LastName:
+                  userValues && userValues?.length > 0 ? userValues[0] : '',
+              },
+            });
+            this.isAuthenticated = true;
+            return response?.IsLoggedIn;
+          } else {
+            this.commonService.removeSessionToken();
+            this.commonService.removePropertyServicesSession();
+            this.commonService.removeUser();
+            return of(this.isAuthenticated);
+          }
+        })
+      );
   }
   logon(model: any): Observable<any> {
     const endPoint = apiEndPoint.logon;
